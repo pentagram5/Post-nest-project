@@ -17,6 +17,18 @@
 
 이 프로젝트는 [Nest](https://github.com/nestjs/nest) 프레임워크를 사용한
 `댓글 기능이 있는 익명 게시판 및 키워드 알림 기능 구현` 백엔드 API입니다.
+Nest 프레임워크를 기반으로 , GraphQL, MSA, gRPC 등 다양한 기능을 직접 구현해보는 레포가 되겠습니다.
+
+## 🚀 업데이트 내용
+
+### 1.0.0 (2024-11-12)
+
+- 기본 GraphQL API 서버 설정 완료
+- `Post` 리소스를 위한 GraphQL 쿼리 및 뮤테이션 추가
+    - `getPosts`: 모든 게시글을 조회하는 쿼리
+    - `createPost`: 새로운 게시글을 생성하는 뮤테이션
+- Apollo Server 및 GraphQL Playground 설정 완료
+- 기본적인 엔티티 및 DTO 구조 설정
 
 ## 데이터베이스 정보
 
@@ -109,6 +121,13 @@ src/
 │   ├── Comments.entity.ts  # 댓글 테이블 엔티티 정의
 │   ├── Keyword.entity.ts/  # 키워드 테이블 엔티티 정의
 │   └── Post.entity.ts/     # 게시판 게시글 테이블 엔티티 정의
+│
+├── graphql/               # graphql 구현 모듈 디렉토리
+│   ├── graphql.resolver.ts #resolver 선언
+│   ├── graphql.service.ts
+│   ├── graphql.module.ts
+│   ├── dto/            # 데이터 전송 객체 (DTO)
+│   └── README.md/     # 구현 관련 사항 정리
 │
 ├── modules/                # 기능 모듈 디렉토리
 │   ├── comment/            # 댓글 모듈
