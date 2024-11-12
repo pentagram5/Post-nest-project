@@ -66,7 +66,9 @@ export class CommentService {
     }
   }
 
-  async findAll(commentSearchDto: CommentSearchDto) {
+  async findAll(
+    commentSearchDto: CommentSearchDto,
+  ): Promise<CommentSearchResponseDto> {
     const {
       postId,
       parentCommentId = null,
@@ -94,33 +96,46 @@ export class CommentService {
       }
     }
     const query = this.commentRepo
-      .createQueryBuilder('post')
-      .andWhere('post_id = :postId', {
-        postId,
-      })
-      .orderBy('post.created_at', 'DESC');
+      .createQueryBuilder('comment')
+      .select([
+        'comment.comment_id AS commentId', // 테이블명 없이 별칭 사용
+        'comment.author AS author',
+        'comment.content AS content',
+        'comment.parent_comment_id AS parentCommentId',
+        'comment.created_at AS createdAt',
+        '(SELECT COUNT(*) FROM comment AS child WHERE child.parent_comment_id = comment.comment_id) > 0 AS hasChildComments',
+      ])
+      .where('comment.post_id = :postId', { postId })
+      .orderBy('comment.created_at', 'DESC');
+    // const query = this.commentRepo
+    //   .createQueryBuilder('post')
+    //   .andWhere('post_id = :postId', {
+    //     postId,
+    //   })
+    //   .orderBy('post.created_at', 'DESC');
     if (parentCommentId) {
-      query.andWhere('parent_comment_id = :parentCommentId', {
+      query.andWhere('comment.parent_comment_id = :parentCommentId', {
         parentCommentId,
       });
     }
-    const count = await query.getCount();
 
     const item = await query
       .skip((page - 1) * limit)
       .take(limit)
-      .getMany();
+      .getRawMany();
+    const count = await query.getCount();
 
     const result = plainToInstance(CommentSearchDataDto, item, {
       excludeExtraneousValues: true,
     });
-    return plainToInstance(CommentSearchResponseDto, {
+
+    return {
       page: Number(page),
       total: count,
       limit: Number(limit),
       maxPage: Math.ceil(count / Number(limit)),
       results: result,
-    });
+    };
   }
 
   findOne(id: number) {

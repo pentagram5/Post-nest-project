@@ -51,7 +51,7 @@ export class PostService {
     }
 
     if (title) {
-      query.andWhere('MATCH(post.title) AGAINST(:title IN BOOLEAN MODE)', {
+      query.andWhere('MATCH(post.title) AGAINST(:title  IN BOOLEAN MODE)', {
         title,
       });
     }

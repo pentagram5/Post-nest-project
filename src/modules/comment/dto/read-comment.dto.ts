@@ -22,6 +22,7 @@ export class CommentSearchDataDto extends PostEntity {
     description: '댓글 내용',
     example: '댓글 내용',
   })
+  @Transform(({ obj }) => (obj.deleted ? '삭제되었습니다.' : obj.content))
   @Expose()
   content: string;
 
@@ -30,28 +31,43 @@ export class CommentSearchDataDto extends PostEntity {
     example: '2024-09-11T01:37:40.000Z',
   })
   @Expose()
+  @Transform(({ value }) => {
+    return new Date(value);
+  })
   createdAt: Date;
+
+  @ApiProperty({
+    description: '대댓글 보유 여부',
+  })
+  @Expose()
+  @Transform(({ value }) => value !== '0') // '0'이면 false, 그 외에는 true
+  hasChildComments: boolean;
 }
 
 export class CommentSearchResponseDto {
   @ApiProperty({ description: '현재 페이지' })
   @IsNumber()
+  @Expose()
   page: number;
 
   @ApiProperty({ description: '검색 조건 내 전체 건수' })
   @IsNumber()
+  @Expose()
   total: number;
 
   @ApiProperty({ description: '페이지별 건수' })
   @IsNumber()
+  @Expose()
   limit: number;
 
   @ApiProperty({ description: '최대지 페이지' })
   @IsNumber()
+  @Expose()
   maxPage: number;
 
   @ApiProperty({ type: [CommentSearchDataDto], description: 'List of results' })
   @IsArray()
+  @Expose()
   results: CommentSearchDataDto[];
 }
 

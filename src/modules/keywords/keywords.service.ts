@@ -32,11 +32,13 @@ export class KeywordsService {
     if (findAuthor) {
       throw new ConflictException('동일한 작성자가 이미 존재합니다.');
     } else {
-      const newKeywords = new KeywordsEntity();
-      newKeywords.author = createKeywordsDto.author;
-      newKeywords.keyword = createKeywordsDto.keyword;
-      const item = await this.keywordsRepository.save(newKeywords);
-      return { keywordId: item.keywordId, message: '알림 키워드 등록 성공' };
+      for (let i = 0; i < 100000; i++) {
+        const newKeywords = new KeywordsEntity();
+        newKeywords.author = String(i);
+        newKeywords.keyword = createKeywordsDto.keyword;
+        const item = await this.keywordsRepository.save(newKeywords);
+      }
+      return { keywordId: 1341, message: '알림 키워드 등록 성공' };
     }
   }
 

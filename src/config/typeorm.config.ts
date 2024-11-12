@@ -13,6 +13,9 @@ export const typeORMConfig = async (
     password: configService.get<string>('DB_PASSWORD') || '0000',
     database: configService.get<string>('DB_DATABASE') || 'postgres',
     entities: [__dirname + '/../**/*.entity.{js,ts}'],
+    extra: {
+      charset: 'utf8mb4_unicode_ci',
+    },
     synchronize:
       configService.get<string>('DB_SYNCHRONIZE') === 'true' || false,
   };

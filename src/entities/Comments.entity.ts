@@ -38,6 +38,9 @@ export class CommentEntity {
   @Column({ name: 'parent_comment_id', nullable: true })
   parentCommentId: number | null;
 
+  @Column({ name: 'deleted', default: false })
+  deleted: boolean;
+
   @CreateDateColumn({ name: 'created_at', precision: 6, comment: '작성 일자' })
   createdAt: Date;
 }
