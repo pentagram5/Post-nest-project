@@ -8,4 +8,4 @@ import { PostEntity } from '../entities/Post.entity';
   imports: [TypeOrmModule.forFeature([PostEntity])],
   providers: [GraphqlResolver, GraphqlService],
 })
-export class GraphqlModule {}
+export class GraphqlNestModule {}

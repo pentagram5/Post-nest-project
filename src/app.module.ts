@@ -7,10 +7,10 @@ import { PostModule } from './modules/post/post.module';
 import { KeywordsEntity } from './entities/Keyword.entity';
 import { KeywordsModule } from './modules/keywords/keywords.module';
 import { CommentModule } from './modules/comment/comment.module';
-import { GraphqlModule } from './graphql/graphql.module';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
+import { GraphqlNestModule } from './graphql/graphql.module';
 
 @Module({
   imports: [
@@ -35,7 +35,7 @@ import { join } from 'path';
     PostModule,
     KeywordsModule,
     CommentModule,
-    GraphqlModule,
+    GraphqlNestModule,
   ],
   controllers: [],
   providers: [],
