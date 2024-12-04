@@ -16,6 +16,8 @@ import { CommentEntity } from '../../entities/Comments.entity';
 
 @Injectable()
 export class KeywordsService {
+  public test = 1;
+
   constructor(
     @InjectRepository(KeywordsEntity)
     private keywordsRepository: Repository<KeywordsEntity>,

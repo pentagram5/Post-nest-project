@@ -39,7 +39,10 @@ import { DeleteKeywordsDto } from './dto/delete-keywords.dto';
   type: Http4XXDto,
 })
 export class KeywordsController {
-  constructor(@Inject() private readonly keywordsService: KeywordsService) {}
+  constructor(@Inject() private readonly keywordsService: KeywordsService) {
+    console.log(`Keyword Controller test, ${this.keywordsService.test}`);
+    this.keywordsService.test += 1;
+  }
 
   @Post()
   @ApiOperation({

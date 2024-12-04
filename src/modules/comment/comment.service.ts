@@ -24,7 +24,10 @@ export class CommentService {
     private postRepo: Repository<PostEntity>,
     @InjectRepository(CommentEntity)
     private commentRepo: Repository<CommentEntity>,
-  ) {}
+  ) {
+    console.log(`Comment Service test, ${this.keywordService.test}`);
+    this.keywordService.test += 1;
+  }
 
   async create(
     createCommentQueryDto: CreateCommentQueryDto,

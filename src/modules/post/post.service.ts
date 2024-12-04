@@ -25,7 +25,10 @@ export class PostService {
     private readonly keywordService: KeywordsService,
     @InjectRepository(PostEntity)
     private postRepo: Repository<PostEntity>,
-  ) {}
+  ) {
+    console.log(`Post Service test, ${this.keywordService.test}`);
+    this.keywordService.test += 1;
+  }
 
   async create(createPostDto: CreatePostDto): Promise<CreatePostResponseDto> {
     const newPost = new PostEntity();
